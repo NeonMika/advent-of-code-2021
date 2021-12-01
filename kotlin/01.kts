@@ -18,7 +18,7 @@ println(star1())
 
 // Day 01, 2 stars
 fun star2(test: Boolean = false) =
-    readData("01", if (test) "test" else "01") { it.toInt() }
+    readData("01", if (test) "test" else "02") { it.toInt() }
         .windowed(3) { it.sum() }
         .windowed(2) { it[1] > it[0] }
         .count { it }
