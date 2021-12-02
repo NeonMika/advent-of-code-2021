@@ -9,7 +9,6 @@ fun <A> readData(day: String, stars: String, lineMapper: (String) -> A) =
 // Day 01, 1 star
 fun star1(test: Boolean = false) =
     readData("01", if (test) "test" else "01") { it.toInt() }
-        .map { it.toInt() }
         .fold(-1 to -1) { res, next -> next to res.second + if (next > res.first) 1 else 0 }
         .second
 
