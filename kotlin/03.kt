@@ -36,6 +36,7 @@ fun main() {
         operator fun plus(ch: Char) = Counter(zeros + (ch == '0').int, ones + (ch == '1').int)
     }
 
+    // Extension methods
     fun Iterable<BitString>.counters() = fold(Array(first().length) { Counter() }.toList()) { l, x ->
         l.mapIndexed { i, e -> e + x[i] }
     }
