@@ -1,16 +1,16 @@
-class Day1 : Day<List<Int>>("01") {
-    override fun data(star: Int, test: Boolean): List<Int> = readData(filePostfix(1, test)) { it.toInt() }
+class Day1 : Day<List<Int>, List<Int>>("01") {
+    override fun dataStar1(test: Boolean) = readData(1, test) { it.toInt() }
+    override fun dataStar2(test: Boolean) = readData(2, test) { it.toInt() }
 
     // 1 star
-    override fun star1(test: Boolean) =
-        data(1, test)
-            .fold(-1 to -1) { res, next -> next to res.second + if (next > res.first) 1 else 0 }
-            .second
+    data class Agg(val last: Int = -1, val incCount: Int = -1)
+
+    override fun star1(test: Boolean, data: List<Int>) =
+        data.fold(Agg()) { agg, num -> Agg(num, (agg.incCount + if (num > agg.last) 1 else 0)) }.incCount
 
     // 2 stars
-    override fun star2(test: Boolean) =
-        data(1, test)
-            .windowed(3) { it.sum() }
+    override fun star2(test: Boolean, data: List<Int>) =
+        data.windowed(3) { it.sum() }
             .windowed(2) { it[1] > it[0] }
             .count { it }
 }

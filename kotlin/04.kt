@@ -1,4 +1,4 @@
-class Day4 : Day<Day4.Input>("04") {
+class Day4 : Day<Day4.Input, Day4.Input>("04") {
     // Classes
     data class BingoNumber(val num: Int, var drawn: Boolean = false) {
         constructor(str: String) : this(str.toInt())
@@ -38,8 +38,8 @@ class Day4 : Day<Day4.Input>("04") {
     data class Input(val numbers: List<Int>, val boards: List<Board>)
 
     // Data
-    override fun data(star: Int, test: Boolean): Input {
-        val readLines = readData<String>(filePostfix(star, test)).filter { it.isNotBlank() }
+    private fun data(star: Int, test: Boolean): Input {
+        val readLines = readData<String>(star, test).filter { it.isNotBlank() }
         val numbers = readLines[0].split(",").map(String::toInt)
         val boards =
             readLines
@@ -50,9 +50,11 @@ class Day4 : Day<Day4.Input>("04") {
         return Input(numbers, boards)
     }
 
+    override fun dataStar1(test: Boolean): Input = data(1, test)
+    override fun dataStar2(test: Boolean): Input = data(2, test)
+
     // 1 Star
-    override fun star1(test: Boolean): Int {
-        val data = data(1, test)
+    override fun star1(test: Boolean, data: Input): Int {
         var finalNumber = 0
         for (n in data.numbers) {
             for (board in data.boards) {
@@ -68,8 +70,7 @@ class Day4 : Day<Day4.Input>("04") {
     }
 
     // 2 Stars
-    override fun star2(test: Boolean): Int {
-        val data = data(2, test)
+    override fun star2(test: Boolean, data: Input): Int {
         var finalNumber = 0
         var finalBoard: Board? = null
         for (n in data.numbers) {
