@@ -1,8 +1,4 @@
-// Settings
-const val day = "03"
-
-// main
-fun main() {
+class Day3 : Day<List<Day3.BitString>>("03") {
     // Classes
     data class BitString(val str: String) : CharSequence by str {
         val int: Int = str.toInt(2)
@@ -58,11 +54,11 @@ fun main() {
     fun Iterable<Counter>.gammaRate() = BitString(map { it.epsilonRate }.joinToString(""))
 
     // Data
-    fun data(star: Int, test: Boolean = false) =
-        readData(day, filePostfix(star, test)) { BitString(it) }
+    override fun data(star: Int, test: Boolean) =
+        readData(filePostfix(star, test)) { BitString(it) }
 
     // 1 Star
-    fun star1(test: Boolean = false): Int {
+    override fun star1(test: Boolean): Int {
         val data = data(1, test)
 
         val counters = data.counters()
@@ -72,10 +68,9 @@ fun main() {
 
         return gammaRate.int * epsilonRate.int
     }
-    output(day, 1, ::star1)
 
     // 2 Stars
-    fun star2(test: Boolean = false): Int {
+    override fun star2(test: Boolean): Int {
         val data = data(2, test)
 
         val oxygenGeneratorRating = data.leftToRightSelection { ch, counter -> ch == counter.oxygenGeneratorRating }
@@ -84,5 +79,8 @@ fun main() {
 
         return oxygenGeneratorRating.int * co2ScrubberRating.int
     }
-    output(day, 2, ::star2)
+}
+
+fun main() {
+    Day3()()
 }

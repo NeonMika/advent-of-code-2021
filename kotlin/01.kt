@@ -1,20 +1,20 @@
-fun main() {
-    // Settings
-    val day = "01"
+class Day1 : Day<List<Int>>("01") {
+    override fun data(star: Int, test: Boolean): List<Int> = readData(filePostfix(1, test)) { it.toInt() }
 
     // 1 star
-    fun star1(test: Boolean = false) =
-        readData("01", if (test) "test" else "01") { it.toInt() }
+    override fun star1(test: Boolean) =
+        data(1, test)
             .fold(-1 to -1) { res, next -> next to res.second + if (next > res.first) 1 else 0 }
             .second
-    output(day, 1, ::star1)
 
     // 2 stars
-    fun star2(test: Boolean = false) =
-        readData("01", if (test) "test" else "02") { it.toInt() }
+    override fun star2(test: Boolean) =
+        data(1, test)
             .windowed(3) { it.sum() }
             .windowed(2) { it[1] > it[0] }
             .count { it }
+}
 
-    output(day, 2, ::star2)
+fun main() {
+    Day1()()
 }

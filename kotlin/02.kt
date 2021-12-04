@@ -1,7 +1,4 @@
-fun main() {
-    // Settings
-    val day = "02"
-
+class Day2 : Day<List<Day2.Instruction>>("02") {
     // Classes
     data class Instruction(val dir: String, val dist: Int)
 
@@ -30,14 +27,16 @@ fun main() {
     }
 
     // Data
-    fun data(star: Int, test: Boolean = false) =
-        readData(day, filePostfix(star, test)) { line -> line.split(" ").let { Instruction(it[0], it[1].toInt()) } }
+    override fun data(star: Int, test: Boolean) =
+        readData(filePostfix(star, test)) { line -> line.split(" ").let { Instruction(it[0], it[1].toInt()) } }
 
     // 1 Star
-    fun star1(test: Boolean = false) = data(1, test).fold(Submarine()) { sub, i -> sub.next(i) }.result
-    output(day, 1, ::star1)
+    override fun star1(test: Boolean) = data(1, test).fold(Submarine()) { sub, i -> sub.next(i) }.result
 
     // Day 02, 2 Stars
-    fun star2(test: Boolean = false) = data(2, test).fold(ExtendedSubmarine()) { sub, i -> sub.next(i) }.result
-    output(day, 2, ::star2)
+    override fun star2(test: Boolean) = data(2, test).fold(ExtendedSubmarine()) { sub, i -> sub.next(i) }.result
+}
+
+fun main() {
+    Day2()()
 }
