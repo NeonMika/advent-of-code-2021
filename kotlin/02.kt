@@ -27,17 +27,15 @@ class Day2 : Day<List<Day2.Instruction>, List<Day2.Instruction>>("02") {
     }
 
     // Data
-    override fun dataStar1(test: Boolean) =
-        readData(1, test) { line -> line.split(" ").let { Instruction(it[0], it[1].toInt()) } }
-    override fun dataStar2(test: Boolean) =
-        readData(2, test) { line -> line.split(" ").let { Instruction(it[0], it[1].toInt()) } }
+    override fun dataStar1(lines: List<String>) = lines.map { it.split(" ").let { Instruction(it[0], it[1].toInt()) } }
+    override fun dataStar2(lines: List<String>) = lines.map { it.split(" ").let { Instruction(it[0], it[1].toInt()) } }
 
     // 1 Star
-    override fun star1(test: Boolean, data: List<Instruction>) =
+    override fun star1(data: List<Instruction>) =
         data.fold(Submarine()) { sub, i -> sub.next(i) }.result
 
     // Day 02, 2 Stars
-    override fun star2(test: Boolean, data: List<Instruction>) =
+    override fun star2(data: List<Instruction>) =
         data.fold(ExtendedSubmarine()) { sub, i -> sub.next(i) }.result
 }
 

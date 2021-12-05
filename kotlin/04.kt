@@ -38,11 +38,10 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
     data class Input(val numbers: List<Int>, val boards: List<Board>)
 
     // Data
-    private fun data(star: Int, test: Boolean): Input {
-        val readLines = readData<String>(star, test).filter { it.isNotBlank() }
-        val numbers = readLines[0].split(",").map(String::toInt)
+    private fun data(lines: List<String>): Input {
+        val numbers = lines[0].split(",").map(String::toInt)
         val boards =
-            readLines
+            lines
                 .drop(1)
                 .chunked(5)
                 .map { boardLines -> boardLines.map { line -> line.parts().map(::BingoNumber) } }
@@ -50,11 +49,11 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
         return Input(numbers, boards)
     }
 
-    override fun dataStar1(test: Boolean): Input = data(1, test)
-    override fun dataStar2(test: Boolean): Input = data(2, test)
+    override fun dataStar1(lines: List<String>): Input = data(lines)
+    override fun dataStar2(lines: List<String>): Input = data(lines)
 
     // 1 Star
-    override fun star1(test: Boolean, data: Input): Int {
+    override fun star1(data: Input): Int {
         var finalNumber = 0
         for (n in data.numbers) {
             for (board in data.boards) {
@@ -70,7 +69,7 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
     }
 
     // 2 Stars
-    override fun star2(test: Boolean, data: Input): Int {
+    override fun star2(data: Input): Int {
         var finalNumber = 0
         var finalBoard: Board? = null
         for (n in data.numbers) {
