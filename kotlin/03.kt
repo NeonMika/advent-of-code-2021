@@ -60,7 +60,7 @@ class Day3 : Day<List<Day3.BitString>, List<Day3.BitString>>("03") {
     override fun dataStar2(lines : List<String>) = lines.map(::BitString)
 
     // 1 Star
-    override fun star1(data: List<BitString>): Int {
+    override fun star1(data: List<BitString>): Number {
         val counters = data.counters()
 
         val gammaRate = counters.gammaRate
@@ -70,7 +70,7 @@ class Day3 : Day<List<Day3.BitString>, List<Day3.BitString>>("03") {
     }
 
     // 2 Stars
-    override fun star2(data: List<BitString>): Int {
+    override fun star2(data: List<BitString>): Number {
         val oxygenGeneratorRating = data.leftToRightSelection { ch, counter -> ch == counter.oxygenGeneratorRating }
 
         val co2ScrubberRating = data.leftToRightSelection { ch, counter -> ch == counter.co2ScrubberRating }

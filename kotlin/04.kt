@@ -53,7 +53,7 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
     override fun dataStar2(lines: List<String>): Input = data(lines)
 
     // 1 Star
-    override fun star1(data: Input): Int {
+    override fun star1(data: Input): Number {
         var finalNumber = 0
         for (n in data.numbers) {
             for (board in data.boards) {
@@ -69,7 +69,7 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
     }
 
     // 2 Stars
-    override fun star2(data: Input): Int {
+    override fun star2(data: Input): Number {
         var finalNumber = 0
         var finalBoard: Board? = null
         for (n in data.numbers) {

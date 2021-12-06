@@ -31,11 +31,11 @@ class Day2 : Day<List<Day2.Instruction>, List<Day2.Instruction>>("02") {
     override fun dataStar2(lines: List<String>) = lines.map { it.split(" ").let { Instruction(it[0], it[1].toInt()) } }
 
     // 1 Star
-    override fun star1(data: List<Instruction>) =
+    override fun star1(data: List<Instruction>): Number =
         data.fold(Submarine()) { sub, i -> sub.next(i) }.result
 
     // Day 02, 2 Stars
-    override fun star2(data: List<Instruction>) =
+    override fun star2(data: List<Instruction>): Number =
         data.fold(ExtendedSubmarine()) { sub, i -> sub.next(i) }.result
 }
 

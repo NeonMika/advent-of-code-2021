@@ -5,11 +5,11 @@ class Day1 : Day<List<Int>, List<Int>>("01") {
     // 1 star
     data class Agg(val last: Int = -1, val incCount: Int = -1)
 
-    override fun star1(data: List<Int>) =
+    override fun star1(data: List<Int>): Number =
         data.fold(Agg()) { agg, num -> Agg(num, (agg.incCount + if (num > agg.last) 1 else 0)) }.incCount
 
     // 2 stars
-    override fun star2(data: List<Int>) =
+    override fun star2(data: List<Int>): Number =
         data.windowed(3) { it.sum() }
             .windowed(2) { it[1] > it[0] }
             .count { it }

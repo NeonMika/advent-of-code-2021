@@ -37,10 +37,10 @@ class Day5 :
             .groupingBy { it }.eachCount()
             .count { (_, v) -> v >= 2 }
 
-    override fun star1(data: List<Pair<Point, Point>>) =
+    override fun star1(data: List<Pair<Point, Point>>): Number =
         work(data) { it.first.sameX(it.second) || it.first.sameY(it.second) }
 
-    override fun star2(data: List<Pair<Point, Point>>) = work(data) { true }
+    override fun star2(data: List<Pair<Point, Point>>): Number = work(data) { true }
 }
 
 fun main() {
