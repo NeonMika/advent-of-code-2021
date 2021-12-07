@@ -24,27 +24,57 @@ abstract class Day<D1, D2>(val day: String) {
             val testTime = measureTimeMillis {
                 testResult = star1(true)
             }
-            println("Result (test): $testResult in ${testTime}ms")
+            println("Result (test - main): $testResult in ${testTime}ms")
             var realResult: Number
             val realTime = measureTimeMillis {
                 realResult = star1()
             }
-            println("Result (real): $realResult in ${realTime}ms")
+            println("Result (real - main): $realResult in ${realTime}ms")
+
+            for ((i, addSol) in additionalStar1Solutions.withIndex()) {
+                var testResult: Number
+                val testTime = measureTimeMillis {
+                    testResult = addSol(dataStar1(readData(1, true)))
+                }
+                println("Result (test - additional solution #$i): $testResult in ${testTime}ms")
+                var realResult: Number
+                val realTime = measureTimeMillis {
+                    realResult = addSol(dataStar1(readData(1, false)))
+                }
+                println("Result (real - additional solution #$i): $realResult in ${realTime}ms")
+            }
         } else {
             var testResult: Number
             val testTime = measureTimeMillis {
                 testResult = star2(true)
             }
-            println("Result (test): $testResult in ${testTime}ms")
+            println("Result (test - main): $testResult in ${testTime}ms")
             var realResult: Number
             val realTime = measureTimeMillis {
                 realResult = star2()
             }
-            println("Result (real): $realResult in ${realTime}ms")
+            println("Result (real - main): $realResult in ${realTime}ms")
+
+            for ((i, addSol) in additionalStar2Solutions.withIndex()) {
+                var testResult: Number
+                val testTime = measureTimeMillis {
+                    testResult = addSol(dataStar2(readData(2, true)))
+                }
+                println("Result (test - additional solution #${i + 1}): $testResult in ${testTime}ms")
+                var realResult: Number
+                val realTime = measureTimeMillis {
+                    realResult = addSol(dataStar2(readData(2, false)))
+                }
+                println("Result (real - additional solution #${i + 1}): $realResult in ${realTime}ms")
+            }
         }
         println()
     }
 
+    protected open val additionalStar1Solutions: List<(D1) -> Number>
+        get() = emptyList()
+    protected open val additionalStar2Solutions: List<(D2) -> Number>
+        get() = emptyList()
 
     protected abstract fun star1(data: D1): Number
 
