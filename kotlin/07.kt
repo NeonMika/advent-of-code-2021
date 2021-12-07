@@ -16,7 +16,7 @@ class Day7 : Day<List<Int>, List<Int>>("07") {
     override val additionalStar2Solutions: List<(List<Int>) -> Number>
         get() = listOf { data ->
             data.minOf { it }.rangeTo(data.maxOf { it })
-                .minOf { pos -> data.sumOf { (0..(it - pos).absoluteValue).sum() } }
+                .minOf { pos -> data.sumOf { (1..(it - pos).absoluteValue).sum() } }
         }
 }
 
