@@ -47,7 +47,7 @@ class Day8 : Day<List<Day8.Input>, List<Day8.Input>>("08") {
             val e = inputCounts.filter { (_, v) -> v == 4 }.map { it.key }.single()
             // f: Only segment that is lit 9 times
             val f = inputCounts.filter { (_, v) -> v == 9 }.map { it.key }.single()
-            // d: 4 (unqiue) without b, c and f
+            // d: 4 (unique) without b, c and f
             val d = (input.segments.find { it.length == 4 }!!.toSet() - setOf(b, c, f)).single()
             // g: remaining segment
             val g = ("abcdefg".toSet() - setOf(a, b, c, d, e, f)).single()

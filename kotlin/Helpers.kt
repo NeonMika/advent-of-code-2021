@@ -6,6 +6,75 @@ val Boolean.int
 
 fun String.parts(sep: String = " ") = split(sep).filter { it.isNotBlank() }
 
+open class TwoDimensionalArray<T>(
+    val rows: Int = 0,
+    val cols: Int = 0,
+    val initFn: ((row: Int, col: Int) -> T)
+) : Iterable<T> {
+    @OptIn(ExperimentalStdlibApi::class)
+    protected val data = buildList(rows) {
+        repeat(rows) { row -> add(buildList(cols) { repeat(cols) { col -> add(initFn(row, col)) } }.toMutableList()) }
+    }
+
+    val flat = data.flatten()
+
+    constructor(d: List<List<T>>) : this(d.size, d.firstOrNull()?.size ?: 0, { r, c -> d[r][c] })
+
+    operator fun set(row: Int, col: Int, v: T) {
+        data[row][col] = v
+    }
+
+    operator fun get(row: Int, col: Int) = data[row][col]
+
+    override fun toString(): String = data.toString()
+    override fun iterator(): Iterator<T> = iterator {
+        repeat(rows) { row ->
+            repeat(cols) { col ->
+                yield(get(row, col))
+            }
+        }
+    }
+
+    data class Index(val row: Int, val col: Int)
+
+    fun indices() = sequence {
+        repeat(rows) { row ->
+            repeat(cols) { col ->
+                yield(Index(row, col))
+            }
+        }
+    }
+
+
+    data class IndexedElement<T>(val row: Int, val col: Int, val value: T)
+
+    fun with2DIndex() = sequence {
+        repeat(rows) { row ->
+            repeat(cols) { col ->
+                yield(IndexedElement(row, col, get(row, col)))
+            }
+        }
+    }
+
+    fun neighbors(row: Int, col: Int) = sequence {
+        if (row !in 0 until rows || col !in 0 until cols) return@sequence
+        if (row - 1 in 0 until rows) {
+            yield(get(row - 1, col))
+        }
+        if (row + 1 in 0 until rows) {
+            yield(get(row + 1, col))
+        }
+        if (col - 1 in 0 until cols) {
+            yield(get(row, col - 1))
+        }
+        if (col + 1 in 0 until cols) {
+            yield(get(row, col + 1))
+        }
+    }
+
+    fun <X> map(mapper: (T) -> X) = TwoDimensionalArray(rows, cols) { row, col -> mapper(get(row, col)) }
+}
+
 abstract class Day<D1, D2>(val day: String) {
     abstract fun dataStar1(lines: List<String>): D1
     abstract fun dataStar2(lines: List<String>): D2

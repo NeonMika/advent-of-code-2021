@@ -4,25 +4,6 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
         constructor(str: String) : this(str.toInt())
     }
 
-    open class TwoDimensionalArray<T>(
-        val rows: Int = 0,
-        val cols: Int = 0,
-        val initFn: ((row: Int, col: Int) -> T)
-    ) {
-        @OptIn(ExperimentalStdlibApi::class)
-        protected val data = buildList(rows) {
-            repeat(rows) { row -> add(buildList(cols) { repeat(cols) { col -> add(initFn(row, col)) } }) }
-        }
-
-        val flat = data.flatten()
-
-        constructor(d: List<List<T>>) : this(d.size, d.firstOrNull()?.size ?: 0, { r, c -> d[r][c] })
-
-        operator fun get(row: Int, col: Int) = data[row][col]
-
-        override fun toString(): String = data.toString()
-    }
-
     class Board(d: List<List<BingoNumber>>) : TwoDimensionalArray<BingoNumber>(d) {
         val isSolved
             get() = isSolvedViaRow || isSolvedViaColumn
