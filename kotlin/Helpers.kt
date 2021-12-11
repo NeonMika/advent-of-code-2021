@@ -58,7 +58,7 @@ open class TwoDimensionalArray<T>(
         }
     }
 
-    fun horVertNeighbors(row: Int, col: Int) = sequence {
+    fun getHorizontalAndVerticalNeighbors(row: Int, col: Int) = sequence {
         if (row !in 0 until rows || col !in 0 until cols) return@sequence
         if (row - 1 in 0 until rows) {
             yield(get(row - 1, col))
@@ -74,8 +74,46 @@ open class TwoDimensionalArray<T>(
         }
     }
 
-    fun <X> map(mapper: (T) -> X) = TwoDimensionalArray(rows, cols) { row, col -> mapper(get(row, col)) }
-    fun <X> mapIndexed(mapper: (Int, Int, T) -> X) =
+    inline fun mutateAllNeighbors(row: Int, col: Int, mapper: (T) -> T) {
+        for (neighborRow in row - 1..row + 1) {
+            for (neighborCol in col - 1..col + 1) {
+                if (neighborRow to neighborCol in this) {
+                    this[neighborRow, neighborCol] = mapper(this[neighborRow, neighborCol])
+                }
+            }
+        }
+    }
+
+    inline fun mutateIndexedAllNeighbors(row: Int, col: Int, mapper: (Int, Int, T) -> T) {
+        for (neighborRow in row - 1..row + 1) {
+            for (neighborCol in col - 1..col + 1) {
+                if (neighborRow to neighborCol in this) {
+                    this[neighborRow, neighborCol] = mapper(neighborRow, neighborCol, this[neighborRow, neighborCol])
+                }
+            }
+        }
+    }
+
+    inline fun <X> mutate(crossinline mapper: (T) -> T) {
+        for (row in 0 until rows) {
+            for (col in 0 until cols) {
+                this[row, col] = mapper(this[row, col])
+            }
+        }
+    }
+
+    inline fun <X> mutateIndexed(crossinline mapper: (Int, Int, T) -> T) {
+        for (row in 0 until rows) {
+            for (col in 0 until cols) {
+                this[row, col] = mapper(row, col, this[row, col])
+            }
+        }
+    }
+
+    inline fun <X> map(crossinline mapper: (T) -> X) =
+        TwoDimensionalArray(rows, cols) { row, col -> mapper(get(row, col)) }
+
+    inline fun <X> mapIndexed(crossinline mapper: (Int, Int, T) -> X) =
         TwoDimensionalArray(rows, cols) { row, col -> mapper(row, col, get(row, col)) }
 }
 

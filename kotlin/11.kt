@@ -5,22 +5,15 @@ class Day11 : Day<TwoDimensionalArray<Int>, TwoDimensionalArray<Int>>("11") {
     override fun dataStar2(lines: List<String>): TwoDimensionalArray<Int> = dataStar1(lines)
 
     fun step(data: TwoDimensionalArray<Int>): Pair<TwoDimensionalArray<Int>, Int> {
-        var cur = data
         var localIncs = 0
-        cur = cur.map { it + 1 }
+        var cur = data.map { it + 1 }
         while (cur.any { it > 9 }) {
             for (row in 0 until cur.rows) {
                 for (col in 0 until cur.cols) {
                     if (cur[row, col] > 9) {
                         cur[row, col] = Integer.MIN_VALUE
                         localIncs++
-                        for (neighborRow in row - 1..row + 1) {
-                            for (neighborCol in col - 1..col + 1) {
-                                if (neighborRow to neighborCol in cur) {
-                                    cur[neighborRow, neighborCol]++
-                                }
-                            }
-                        }
+                        cur.mutateAllNeighbors(row, col) { it + 1 }
                     }
                 }
             }
