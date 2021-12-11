@@ -35,6 +35,8 @@ open class TwoDimensionalArray<T>(
         }
     }
 
+    operator fun contains(pos: Pair<Int, Int>) = pos.first in 0 until rows && pos.second in 0 until cols
+
     data class Index(val row: Int, val col: Int)
 
     fun indices() = sequence {
@@ -56,7 +58,7 @@ open class TwoDimensionalArray<T>(
         }
     }
 
-    fun neighbors(row: Int, col: Int) = sequence {
+    fun horVertNeighbors(row: Int, col: Int) = sequence {
         if (row !in 0 until rows || col !in 0 until cols) return@sequence
         if (row - 1 in 0 until rows) {
             yield(get(row - 1, col))
@@ -73,6 +75,8 @@ open class TwoDimensionalArray<T>(
     }
 
     fun <X> map(mapper: (T) -> X) = TwoDimensionalArray(rows, cols) { row, col -> mapper(get(row, col)) }
+    fun <X> mapIndexed(mapper: (Int, Int, T) -> X) =
+        TwoDimensionalArray(rows, cols) { row, col -> mapper(row, col, get(row, col)) }
 }
 
 abstract class Day<D1, D2>(val day: String) {
