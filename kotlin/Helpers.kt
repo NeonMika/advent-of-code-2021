@@ -159,7 +159,7 @@ abstract class Day<D1, D2>(val day: String) {
         println("##############")
         println("Day $day, Star $star")
         println("##############")
-        println("Data (test): ${if (star == 1) dataStar1(readData(1, true)) else dataStar2(readData(2, true))}")
+        println("Data (test):\n${if (star == 1) dataStar1(readData(1, true)) else dataStar2(readData(2, true))}")
         if (star == 1) {
             var testResult: Number
             val testTime = measureTimeMillis {
