@@ -4,7 +4,7 @@ import kotlin.system.measureTimeMillis
 val Boolean.int
     get() = if (this) 1 else 0
 
-fun String.parts(sep: String = " ") = split(sep).filter { it.isNotBlank() }
+fun String.parts(sep: String = " ") = split(sep).map { it.trim() }.filter { it.isNotBlank() }
 
 open class TwoDimensionalArray<T>(
     val rows: Int = 0,
@@ -161,65 +161,65 @@ abstract class Day<D1, D2>(val day: String) {
         println("##############")
         println("Data (test):\n${if (star == 1) dataStar1(readData(1, true)) else dataStar2(readData(2, true))}")
         if (star == 1) {
-            var testResult: Number
+            var testResult: Any
             val testTime = measureTimeMillis {
                 testResult = star1(true)
             }
-            println("Result (test - main): $testResult in ${testTime}ms")
-            var realResult: Number
+            println("Result (test - main):\n$testResult in ${testTime}ms")
+            var realResult: Any
             val realTime = measureTimeMillis {
                 realResult = star1()
             }
-            println("Result (real - main): $realResult in ${realTime}ms")
+            println("Result (real - main):\n$realResult in ${realTime}ms")
 
             for ((i, addSol) in additionalStar1Solutions.withIndex()) {
-                var testResult: Number
+                var testResult: Any
                 val testTime = measureTimeMillis {
                     testResult = addSol(dataStar1(readData(1, true)))
                 }
-                println("Result (test - additional solution #$i): $testResult in ${testTime}ms")
-                var realResult: Number
+                println("Result (test - additional solution #$i):\n$testResult in ${testTime}ms")
+                var realResult: Any
                 val realTime = measureTimeMillis {
                     realResult = addSol(dataStar1(readData(1, false)))
                 }
-                println("Result (real - additional solution #$i): $realResult in ${realTime}ms")
+                println("Result (real - additional solution #$i):\n$realResult in ${realTime}ms")
             }
         } else {
-            var testResult: Number
+            var testResult: Any
             val testTime = measureTimeMillis {
                 testResult = star2(true)
             }
-            println("Result (test - main): $testResult in ${testTime}ms")
-            var realResult: Number
+            println("Result (test - main):\n$testResult in ${testTime}ms")
+            var realResult: Any
             val realTime = measureTimeMillis {
                 realResult = star2()
             }
-            println("Result (real - main): $realResult in ${realTime}ms")
+            println("Result (real - main):\n$realResult in ${realTime}ms")
 
             for ((i, addSol) in additionalStar2Solutions.withIndex()) {
-                var testResult: Number
+                var testResult: Any
                 val testTime = measureTimeMillis {
                     testResult = addSol(dataStar2(readData(2, true)))
                 }
-                println("Result (test - additional solution #${i + 1}): $testResult in ${testTime}ms")
-                var realResult: Number
+                println("Result (test - additional solution #${i + 1}):\n$testResult in ${testTime}ms")
+                var realResult: Any
                 val realTime = measureTimeMillis {
                     realResult = addSol(dataStar2(readData(2, false)))
                 }
-                println("Result (real - additional solution #${i + 1}): $realResult in ${realTime}ms")
+                println("Result (real - additional solution #${i + 1}):\n$realResult in ${realTime}ms")
             }
         }
         println()
     }
 
-    protected open val additionalStar1Solutions: List<(D1) -> Number>
+    protected open val additionalStar1Solutions: List<(D1) -> Any>
         get() = emptyList()
-    protected open val additionalStar2Solutions: List<(D2) -> Number>
+    protected open val additionalStar2Solutions: List<(D2) -> Any>
         get() = emptyList()
 
-    protected abstract fun star1(data: D1): Number
+    protected abstract fun star1(data: D1): Any
 
-    protected abstract fun star2(data: D2): Number
+    protected abstract fun star2(data: D2): Any
 
     private fun star1(test: Boolean = false) = star1(dataStar1(readData(1, test)))
 

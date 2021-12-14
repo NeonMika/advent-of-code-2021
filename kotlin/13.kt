@@ -54,13 +54,12 @@ class Day13 : Day<Day13.PaperFolding, Day13.PaperFolding>("13") {
         return data.fold().apply { println(this) }.dots.count { it }
     }
 
-    override fun star2(data: PaperFolding): Number {
+    override fun star2(data: PaperFolding): PaperFolding {
         var cur = data
         while (cur.folds.isNotEmpty()) {
             cur = cur.fold()
         }
-        println(cur)
-        return -1
+        return cur
     }
 }
 
