@@ -3,7 +3,7 @@ import kotlin.system.measureTimeMillis
 
 abstract class Day<D : Any>(val day: String) {
     abstract fun dataStar1(lines: List<String>): D
-    abstract fun dataStar2(lines: List<String>): D
+    open fun dataStar2(lines: List<String>) = dataStar1(lines)
 
     fun readData(star: Int, test: Boolean) = readData(filePostfix(star, test))
     fun readData(stars: String) = File("data/${day}_$stars.txt").readLines().filter { it.isNotBlank() }

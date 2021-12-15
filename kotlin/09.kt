@@ -5,7 +5,9 @@ class Day9 : Day<TwoDimensionalArray<Int>>("09") {
     override fun dataStar2(lines: List<String>): TwoDimensionalArray<Int> = dataStar1(lines)
 
     override fun star1(data: TwoDimensionalArray<Int>): Number =
-        data.with2DIndex().filter { (row, col, v) -> data.getHorizontalAndVerticalNeighbors(row, col).all { it > v } }.sumOf { it.value + 1 }
+        data.with2DIndex()
+            .filter { (row, col, v) -> data.getHorizontalAndVerticalNeighbors(row, col).all { (_, _, x) -> x > v } }
+            .sumOf { it.value + 1 }
 
     fun flood(row: Int, col: Int, data: TwoDimensionalArray<Int>, filled: TwoDimensionalArray<Boolean>): Int {
         return if (row !in 0 until data.rows || col !in 0 until data.cols || filled[row, col]) 0
@@ -20,7 +22,7 @@ class Day9 : Day<TwoDimensionalArray<Int>>("09") {
 
     override fun star2(data: TwoDimensionalArray<Int>): Number {
         val filled = data.map { it == 9 }
-        return data.indices()
+        return data.indices2D()
             .map { (row, col) -> flood(row, col, data, filled) }
             .sortedDescending()
             .take(3)

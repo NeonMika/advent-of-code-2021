@@ -3,14 +3,20 @@ open class TwoDimensionalArray<T>(
     val cols: Int = 0,
     val initFn: ((row: Int, col: Int) -> T)
 ) : Iterable<T> {
-    @OptIn(ExperimentalStdlibApi::class)
-    protected val data = buildList(rows) {
-        repeat(rows) { row -> add(buildList(cols) { repeat(cols) { col -> add(initFn(row, col)) } }.toMutableList()) }
-    }
-
+    protected val data = mutableListOf<MutableList<T>>()
     val flat = data.flatten()
 
     constructor(d: List<List<T>>) : this(d.size, d.firstOrNull()?.size ?: 0, { r, c -> d[r][c] })
+
+    init {
+        repeat(rows) { row ->
+            val r = mutableListOf<T>()
+            repeat(cols) { col ->
+                r.add(initFn(row, col))
+            }
+            data.add(r)
+        }
+    }
 
     operator fun set(row: Int, col: Int, v: T) {
         data[row][col] = v
@@ -18,7 +24,12 @@ open class TwoDimensionalArray<T>(
 
     operator fun get(row: Int, col: Int) = data[row][col]
 
-    override fun toString(): String = data.toString()
+    override fun toString(): String = buildString {
+        for (row in data) {
+            appendLine(row)
+        }
+    }
+
     override fun iterator(): Iterator<T> = iterator {
         repeat(rows) { row ->
             repeat(cols) { col ->
@@ -31,7 +42,7 @@ open class TwoDimensionalArray<T>(
 
     data class Index(val row: Int, val col: Int)
 
-    fun indices() = sequence {
+    fun indices2D() = sequence {
         repeat(rows) { row ->
             repeat(cols) { col ->
                 yield(Index(row, col))
@@ -53,16 +64,16 @@ open class TwoDimensionalArray<T>(
     fun getHorizontalAndVerticalNeighbors(row: Int, col: Int) = sequence {
         if (row !in 0 until rows || col !in 0 until cols) return@sequence
         if (row - 1 in 0 until rows) {
-            yield(get(row - 1, col))
+            yield(IndexedElement(row - 1, col, get(row - 1, col)))
         }
         if (row + 1 in 0 until rows) {
-            yield(get(row + 1, col))
+            yield(IndexedElement(row + 1, col, get(row + 1, col)))
         }
         if (col - 1 in 0 until cols) {
-            yield(get(row, col - 1))
+            yield(IndexedElement(row, col - 1, get(row, col - 1)))
         }
         if (col + 1 in 0 until cols) {
-            yield(get(row, col + 1))
+            yield(IndexedElement(row, col + 1, get(row, col + 1)))
         }
     }
 
@@ -94,7 +105,7 @@ open class TwoDimensionalArray<T>(
         }
     }
 
-    inline fun <X> mutateIndexed(crossinline mapper: (Int, Int, T) -> T) {
+    inline fun <X> mutate2DIndexed(crossinline mapper: (Int, Int, T) -> T) {
         for (row in 0 until rows) {
             for (col in 0 until cols) {
                 this[row, col] = mapper(row, col, this[row, col])
@@ -105,6 +116,6 @@ open class TwoDimensionalArray<T>(
     inline fun <X> map(crossinline mapper: (T) -> X) =
         TwoDimensionalArray(rows, cols) { row, col -> mapper(get(row, col)) }
 
-    inline fun <X> mapIndexed(crossinline mapper: (Int, Int, T) -> X) =
+    inline fun <X> map2DIndexed(crossinline mapper: (Int, Int, T) -> X) =
         TwoDimensionalArray(rows, cols) { row, col -> mapper(row, col, get(row, col)) }
 }
