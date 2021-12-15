@@ -22,7 +22,7 @@ class Day8 : Day<List<Day8.Input>, List<Day8.Input>>("08") {
     )
 
     override fun dataStar1(lines: List<String>): List<Input> =
-        lines.map { line -> line.split("|").run { Input(get(0).parts(), get(1).parts()) } }
+        lines.map { line -> line.split("|").run { Input(get(0).strings(), get(1).strings()) } }
 
     override fun dataStar2(lines: List<String>): List<Input> = dataStar1(lines)
 

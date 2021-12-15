@@ -38,7 +38,7 @@ class Day13 : Day<Day13.PaperFolding, Day13.PaperFolding>("13") {
     override fun dataStar1(lines: List<String>): PaperFolding {
         val foldPattern = """fold along (.)=(\d+)""".toRegex()
         val positions = lines.takeWhile { !foldPattern.matches(it) }
-            .map { it.parts(",").run { get(1).toInt() to get(0).toInt() } }.toSet()
+            .map { it.ints(",").run { get(1) to get(0) } }.toSet()
         val foldInstructions = lines.dropWhile { !foldPattern.matches(it) }
             .map { foldPattern.find(it)!!.groupValues.run { get(1)[0] foldBy get(2).toInt() } }
         return PaperFolding(

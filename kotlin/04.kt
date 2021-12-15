@@ -1,8 +1,6 @@
 class Day4 : Day<Day4.Input, Day4.Input>("04") {
     // Classes
-    data class BingoNumber(val num: Int, var drawn: Boolean = false) {
-        constructor(str: String) : this(str.toInt())
-    }
+    data class BingoNumber(val num: Int, var drawn: Boolean = false)
 
     class Board(d: List<List<BingoNumber>>) : TwoDimensionalArray<BingoNumber>(d) {
         val isSolved
@@ -25,7 +23,7 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
             lines
                 .drop(1)
                 .chunked(5)
-                .map { boardLines -> boardLines.map { line -> line.parts().map(::BingoNumber) } }
+                .map { boardLines -> boardLines.map { line -> line.ints().map(::BingoNumber) } }
                 .map(::Board)
         return Input(numbers, boards)
     }

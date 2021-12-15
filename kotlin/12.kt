@@ -15,7 +15,7 @@ class Day12 : Day<G, G>("12") {
 
     val bigOrNew: G.(N, List<N>) -> Boolean = { node, path -> node.isBig || node !in path }
 
-    override fun dataStar1(lines: List<String>): G = G(lines.map { it.parts("-").run { E(get(0), get(1)) } })
+    override fun dataStar1(lines: List<String>): G = G(lines.map { it.strings("-").run { E(get(0), get(1)) } })
     override fun dataStar2(lines: List<String>): Graph = dataStar1(lines)
 
     override fun star1(data: G): Number = data.dfs(data.start, continuePred = bigOrNew)

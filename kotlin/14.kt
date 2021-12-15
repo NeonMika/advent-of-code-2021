@@ -2,7 +2,7 @@ class Day14 : Day<Day14.Replacement, Day14.Replacement>("14") {
     data class Replacement(val template: String, val mapping: Map<String, String>)
 
     override fun dataStar1(lines: List<String>) =
-        Replacement(lines.first(), lines.drop(1).associate { it.parts("->").let { it[0] to it[1] } })
+        Replacement(lines.first(), lines.drop(1).associate { it.strings("->").let { it[0] to it[1] } })
 
     override fun dataStar2(lines: List<String>) = dataStar1(lines)
 
