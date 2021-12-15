@@ -1,16 +1,13 @@
+import kotlin.reflect.full.createInstance
+
 fun main() {
-    Day1()()
-    Day2()()
-    Day3()()
-    Day4()()
-    Day5()()
-    Day6()()
-    Day7()()
-    Day8()()
-    Day9()()
-    Day10()()
-    Day11()()
-    Day12()()
-    Day13()()
-    Day14()()
+    repeat(25) { dayMin1 ->
+        val nDay = dayMin1 + 1
+        try {
+            val day = Class.forName("Day$nDay").kotlin.createInstance() as Day<*>
+            day()
+        } catch (ex: Exception) {
+            println("Could not execute day $nDay")
+        }
+    }
 }

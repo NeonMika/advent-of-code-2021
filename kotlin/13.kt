@@ -1,4 +1,4 @@
-class Day13 : Day<Day13.PaperFolding, Day13.PaperFolding>("13") {
+class Day13 : Day<Day13.PaperFolding>("13") {
     data class FoldInstruction(val axis: Char, val line: Int)
 
     infix fun Char.foldBy(amount: Int) = FoldInstruction(this, amount)

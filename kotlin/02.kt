@@ -1,4 +1,4 @@
-class Day2 : Day<List<Day2.Instruction>, List<Day2.Instruction>>("02") {
+class Day2 : Day<List<Day2.Instruction>>("02") {
     // Classes
     data class Instruction(val dir: String, val dist: Int)
 
@@ -27,8 +27,8 @@ class Day2 : Day<List<Day2.Instruction>, List<Day2.Instruction>>("02") {
     }
 
     // Data
-    override fun dataStar1(lines: List<String>) = lines.map { it.split(" ").let { Instruction(it[0], it[1].toInt()) } }
-    override fun dataStar2(lines: List<String>) = lines.map { it.split(" ").let { Instruction(it[0], it[1].toInt()) } }
+    override fun dataStar1(lines: List<String>) = lines.map { it.strings().let { Instruction(it[0], it[1].toInt()) } }
+    override fun dataStar2(lines: List<String>) = lines.map { it.strings().let { Instruction(it[0], it[1].toInt()) } }
 
     // 1 Star
     override fun star1(data: List<Instruction>): Number =

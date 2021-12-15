@@ -1,4 +1,4 @@
-class Day9 : Day<TwoDimensionalArray<Int>, TwoDimensionalArray<Int>>("09") {
+class Day9 : Day<TwoDimensionalArray<Int>>("09") {
     override fun dataStar1(lines: List<String>): TwoDimensionalArray<Int> =
         TwoDimensionalArray(lines.map { line -> line.map(Char::digitToInt) })
 

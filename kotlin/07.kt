@@ -1,6 +1,6 @@
 import kotlin.math.absoluteValue
 
-class Day7 : Day<List<Int>, List<Int>>("07") {
+class Day7 : Day<List<Int>>("07") {
     override fun dataStar1(lines: List<String>): List<Int> = lines[0].split(",").map(String::toInt)
 
     override fun dataStar2(lines: List<String>): List<Int> = dataStar1(lines)

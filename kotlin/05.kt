@@ -1,5 +1,5 @@
 class Day5 :
-    Day<List<Pair<Day5.Point, Day5.Point>>, List<Pair<Day5.Point, Day5.Point>>>("05") {
+    Day<List<Pair<Day5.Point, Day5.Point>>>("05") {
     // Classes
     data class Point(val x: Int, val y: Int) : Comparable<Point> {
         operator fun rangeTo(other: Point) = sequence {

@@ -1,4 +1,4 @@
-class Day6 : Day<LongArray, LongArray>("06") {
+class Day6 : Day<LongArray>("06") {
     override fun dataStar1(lines: List<String>): LongArray =
         lines[0].split(",").map(String::toInt).fold(LongArray(9)) { arr, i -> arr.also { it[i]++ } }
     override fun dataStar2(lines: List<String>) = dataStar1(lines)

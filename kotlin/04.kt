@@ -1,4 +1,4 @@
-class Day4 : Day<Day4.Input, Day4.Input>("04") {
+class Day4 : Day<Day4.Input>("04") {
     // Classes
     data class BingoNumber(val num: Int, var drawn: Boolean = false)
 
@@ -11,7 +11,7 @@ class Day4 : Day<Day4.Input, Day4.Input>("04") {
             get() = (0 until cols).any { col -> data.all { row -> row[col].drawn } }
 
         val undrawnSum
-            get() = flat.filter { !it.drawn }.map { it.num }.sum()
+            get() = flat.filter { !it.drawn }.sumOf { it.num }
     }
 
     data class Input(val numbers: List<Int>, val boards: List<Board>)

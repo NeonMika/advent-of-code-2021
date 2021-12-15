@@ -1,4 +1,4 @@
-class Day3 : Day<List<Day3.BitString>, List<Day3.BitString>>("03") {
+class Day3 : Day<List<Day3.BitString>>("03") {
     // Classes
     data class BitString(val str: String) : CharSequence by str {
         val int: Int = str.toInt(2)

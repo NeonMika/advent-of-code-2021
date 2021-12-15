@@ -1,4 +1,4 @@
-class Day1 : Day<List<Int>, List<Int>>("01") {
+class Day1 : Day<List<Int>>("01") {
     override fun dataStar1(lines: List<String>) = lines.map { it.toInt() }
     override fun dataStar2(lines: List<String>) = lines.map { it.toInt() }
 

@@ -1,9 +1,9 @@
 import java.io.File
 import kotlin.system.measureTimeMillis
 
-abstract class Day<D1, D2>(val day: String) {
-    abstract fun dataStar1(lines: List<String>): D1
-    abstract fun dataStar2(lines: List<String>): D2
+abstract class Day<D : Any>(val day: String) {
+    abstract fun dataStar1(lines: List<String>): D
+    abstract fun dataStar2(lines: List<String>): D
 
     fun readData(star: Int, test: Boolean) = readData(filePostfix(star, test))
     fun readData(stars: String) = File("data/${day}_$stars.txt").readLines().filter { it.isNotBlank() }
@@ -66,14 +66,14 @@ abstract class Day<D1, D2>(val day: String) {
         println()
     }
 
-    protected open val additionalStar1Solutions: List<(D1) -> Any>
+    protected open val additionalStar1Solutions: List<(D) -> Any>
         get() = emptyList()
-    protected open val additionalStar2Solutions: List<(D2) -> Any>
+    protected open val additionalStar2Solutions: List<(D) -> Any>
         get() = emptyList()
 
-    protected abstract fun star1(data: D1): Any
+    protected abstract fun star1(data: D): Any
 
-    protected abstract fun star2(data: D2): Any
+    protected abstract fun star2(data: D): Any
 
     private fun star1(test: Boolean = false) = star1(dataStar1(readData(1, test)))
 

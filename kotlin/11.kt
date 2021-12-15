@@ -1,4 +1,4 @@
-class Day11 : Day<TwoDimensionalArray<Int>, TwoDimensionalArray<Int>>("11") {
+class Day11 : Day<TwoDimensionalArray<Int>>("11") {
     override fun dataStar1(lines: List<String>): TwoDimensionalArray<Int> =
         TwoDimensionalArray(lines.map { it.toCharArray().map(Char::digitToInt) })
 
@@ -6,7 +6,7 @@ class Day11 : Day<TwoDimensionalArray<Int>, TwoDimensionalArray<Int>>("11") {
 
     fun step(data: TwoDimensionalArray<Int>): Pair<TwoDimensionalArray<Int>, Int> {
         var localIncs = 0
-        var cur = data.map { it + 1 }
+        val cur = data.map { it + 1 }
         while (cur.any { it > 9 }) {
             for (row in 0 until cur.rows) {
                 for (col in 0 until cur.cols) {

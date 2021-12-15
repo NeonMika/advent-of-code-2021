@@ -1,4 +1,4 @@
-class Day8 : Day<List<Day8.Input>, List<Day8.Input>>("08") {
+class Day8 : Day<List<Day8.Input>>("08") {
     data class Input(val segments: List<String>, val outputs: List<String>)
 
     enum class SegmentNumber(val segments: String, val int: Int) {

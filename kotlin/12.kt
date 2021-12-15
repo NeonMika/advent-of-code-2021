@@ -2,7 +2,7 @@ typealias G = Graph
 typealias N = Graph.Node
 typealias E = Graph.Edge
 
-class Day12 : Day<G, G>("12") {
+class Day12 : Day<G>("12") {
     val G.start get() = nodes.find { it.name == "start" }!!
     val G.end get() = nodes.find { it.name == "end" }!!
     val N.isSmall get() = name[0].isLowerCase()

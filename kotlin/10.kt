@@ -1,4 +1,4 @@
-class Day10 : Day<List<List<Char>>, List<List<Char>>>("10") {
+class Day10 : Day<List<List<Char>>>("10") {
     val pairs = mapOf(
         ')' to '(',
         ']' to '[',
