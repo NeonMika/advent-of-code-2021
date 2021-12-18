@@ -21,5 +21,12 @@ fun String.longs(sep: String = " ") =
 fun String.chars(sep: String = " ") =
     split(sep).map(String::trim).filter(String::isNotBlank).flatMap(String::asIterable)
 
+fun <A, B> Iterable<A>.cross(other: Iterable<B>) = cross(other) { a, b -> a to b }
 
+fun <A, B, C> Iterable<A>.cross(other: Iterable<B>, mapper: (A, B) -> C) =
+    this.flatMap { a -> other.map { b -> mapper(a, b) } }
 
+fun <A, B> Iterable<A>.crossNotSelf(other: Iterable<B>) = crossNotSelf(other) { a, b -> a to b }
+
+fun <A, B, C> Iterable<A>.crossNotSelf(other: Iterable<B>, mapper: (A, B) -> C) =
+    this.flatMapIndexed { ia, a -> other.filterIndexed { ib, _ -> ia != ib }.map { b -> mapper(a, b) } }
