@@ -26,9 +26,10 @@ class Day16 : Day<Day16.Packet>("16") {
         }
 
         companion object {
-            fun fromString(str: String): Packet {
+            fun fromString(bitString: String): Packet {
                 var read = 0
-                var rem = str
+                var rem = bitString
+
                 fun next(i: Int): String {
                     read += i
                     val r = rem.take(i)
