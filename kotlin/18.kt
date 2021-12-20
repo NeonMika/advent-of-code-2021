@@ -32,15 +32,6 @@ class Day18 : Day<List<Day18.FishNumber>>("18") {
             return somethingDone
         }
 
-        /*
-        fun trySplitAll(): Boolean {
-            var somethingDone = false
-            while (trySplitOnce()) {
-                somethingDone = true
-            }
-            return somethingDone
-        }*/
-
         fun tryExplodeOnce(): Boolean {
             if (depth >= 4 && left != null) {
                 val leaves = parent!!.parent!!.parent!!.parent!!.leaves()

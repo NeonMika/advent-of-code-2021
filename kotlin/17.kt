@@ -6,10 +6,10 @@ class Day17 : Day<Day17.Target>("17") {
     data class Target(val x: IntRange, val y: IntRange)
     data class Projectile(val xVel: Int, val yVel: Int, val x: Int = 0, val y: Int = 0) {
         fun step() = Projectile(
-            x = x + xVel,
-            y = y + yVel,
-            xVel = (if (xVel == 0) 0 else xVel - sign(xVel.toDouble())).toInt(),
-            yVel = yVel - 1
+            x + xVel,
+            y + yVel,
+            (if (xVel == 0) 0 else xVel - sign(xVel.toDouble())).toInt(),
+            yVel - 1
         )
 
         fun hits(target: Target) = x in target.x && y in target.y
