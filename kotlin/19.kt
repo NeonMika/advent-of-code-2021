@@ -3,15 +3,10 @@ import kotlin.math.abs
 class Day19 : Day<List<Day19.Scanner>>("19") {
     data class Vertex(val x: Int, val y: Int, val z: Int) {
         // https://stackoverflow.com/questions/16452383/how-to-get-all-24-rotations-of-a-3-dimensional-array
-        fun roll() = Vertex(x, z, -y) // Away from me (around x axis)
-        fun r() = roll()
-        fun turn() = Vertex(-y, x, z) // Top stays top (= around z axis)
-        fun t() = turn()
-
-        fun distanceTo(other: Vertex) = abs(other.x - x) + abs(other.y - y) + abs(other.z - z)
-
-        operator fun plus(other: Vertex) = Vertex(x + other.x, y + other.y, z + other.z)
-        operator fun minus(other: Vertex) = Vertex(x - other.x, y - other.y, z - other.z)
+        private fun roll() = Vertex(x, z, -y) // Away from me (= rotate around x axis)
+        private fun r() = roll()
+        private fun turn() = Vertex(-y, x, z) // Top stays top (= rotate around y axis)
+        private fun t() = turn()
 
         val possibleRotations: List<Vertex> by lazy {
             listOf(
@@ -23,6 +18,11 @@ class Day19 : Day<List<Day19.Scanner>>("19") {
                 t().t().t().r(), t().t().t().r().t(), t().t().t().r().t().t(), t().t().t().r().t().t().t()
             )
         }
+
+        fun distanceTo(other: Vertex) = abs(other.x - x) + abs(other.y - y) + abs(other.z - z)
+
+        operator fun plus(other: Vertex) = Vertex(x + other.x, y + other.y, z + other.z)
+        operator fun minus(other: Vertex) = Vertex(x - other.x, y - other.y, z - other.z)
     }
 
     data class Scanner(val id: Int, val beacons: Set<Vertex>) {
@@ -48,7 +48,7 @@ class Day19 : Day<List<Day19.Scanner>>("19") {
         return scanners
     }
 
-    fun absoluteScanners(originalScanners: List<Scanner>): List<Scanner> {
+    private fun absoluteScanners(originalScanners: List<Scanner>): List<Scanner> {
 
         val absoluteScanners = mutableListOf(originalScanners[0].copy().apply { address = Vertex(0, 0, 0) })
         val alreadyFixedScanners = mutableListOf(0)
