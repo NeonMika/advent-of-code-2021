@@ -30,3 +30,12 @@ fun <A, B> Iterable<A>.crossNotSelf(other: Iterable<B>) = crossNotSelf(other) { 
 
 fun <A, B, C> Iterable<A>.crossNotSelf(other: Iterable<B>, mapper: (A, B) -> C) =
     this.flatMapIndexed { ia, a -> other.filterIndexed { ib, _ -> ia != ib }.map { b -> mapper(a, b) } }
+
+fun <A> Iterable<Iterable<A>>.smallPrint() {
+    for (row in this) {
+        for (x in row) {
+            print(x)
+        }
+        println()
+    }
+}

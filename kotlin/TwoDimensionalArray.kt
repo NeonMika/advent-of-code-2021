@@ -118,4 +118,6 @@ open class TwoDimensionalArray<T>(
 
     inline fun <X> map2DIndexed(crossinline mapper: (Int, Int, T) -> X) =
         TwoDimensionalArray(rows, cols) { row, col -> mapper(row, col, get(row, col)) }
+
+    fun smallPrint() = data.smallPrint()
 }

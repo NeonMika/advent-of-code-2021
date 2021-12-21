@@ -49,7 +49,6 @@ class Day19 : Day<List<Day19.Scanner>>("19") {
     }
 
     private fun absoluteScanners(originalScanners: List<Scanner>): List<Scanner> {
-
         val absoluteScanners = mutableListOf(originalScanners[0].copy().apply { address = Vertex(0, 0, 0) })
         val alreadyFixedScanners = mutableListOf(0)
 
@@ -73,7 +72,6 @@ class Day19 : Day<List<Day19.Scanner>>("19") {
                 }
             }
         }
-
         return absoluteScanners
     }
 
