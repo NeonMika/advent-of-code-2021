@@ -15,12 +15,12 @@ abstract class Day<D : Any>(val day: String) {
         println("##############")
         println("Data (test):\n${if (star == 1) dataStar1(readData(1, true)) else dataStar2(readData(2, true))}")
         if (star == 1) {
-            var testResult: Any
+            var testResult: Any?
             val testTime = measureTimeMillis {
                 testResult = star1(true)
             }
             println("Result (test - main):\n$testResult in ${testTime}ms")
-            var realResult: Any
+            var realResult: Any?
             val realTime = measureTimeMillis {
                 realResult = star1()
             }
@@ -39,12 +39,12 @@ abstract class Day<D : Any>(val day: String) {
                 println("Result (real - additional solution #$i):\n$realResult in ${realTime}ms")
             }
         } else {
-            var testResult: Any
+            var testResult: Any?
             val testTime = measureTimeMillis {
                 testResult = star2(true)
             }
             println("Result (test - main):\n$testResult in ${testTime}ms")
-            var realResult: Any
+            var realResult: Any?
             val realTime = measureTimeMillis {
                 realResult = star2()
             }
@@ -71,9 +71,9 @@ abstract class Day<D : Any>(val day: String) {
     protected open val additionalStar2Solutions: List<(D) -> Any>
         get() = emptyList()
 
-    protected abstract fun star1(data: D): Any
+    protected abstract fun star1(data: D): Any?
 
-    protected abstract fun star2(data: D): Any
+    protected abstract fun star2(data: D): Any?
 
     private fun star1(test: Boolean = false) = star1(dataStar1(readData(1, test)))
 
