@@ -4,10 +4,6 @@ class Day20 : Day<Day20.ImageAndLookup>("20") {
     var infinity = '.'
     private val emptyBorder = 100
 
-    @OptIn(ExperimentalStdlibApi::class)
-    fun <A> listsOf(a: A, lines: Int = emptyBorder, width: Int) =
-        buildList { repeat(lines) { add(buildList { repeat(width) { add(a) } }) } }
-
     fun r(str: String, n: Int) = str.repeat(n)
 
     fun adjustedImage(imageLines: List<String>) =

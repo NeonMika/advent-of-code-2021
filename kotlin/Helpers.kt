@@ -39,3 +39,9 @@ fun <A> Iterable<Iterable<A>>.smallPrint() {
         println()
     }
 }
+
+@OptIn(ExperimentalStdlibApi::class)
+fun <A> listsOf(a: A, lines: Int, width: Int) =
+    buildList { repeat(lines) { add(buildList { repeat(width) { add(a) } }) } }
+
+fun <A> listOf(a: A, width: Int) = listsOf(a, 1, width)[0]
