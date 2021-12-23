@@ -2,20 +2,13 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 class Day23 : Day<Day23.Map>("23") {
-    data class Room(val places: CharArray, val hallwayIndex: Int) {
-        val finished
-            get() = places.all {
-                it == when (hallwayIndex) {
-                    2 -> 'A'
-                    4 -> 'B'
-                    6 -> 'C'
-                    8 -> 'D'
-                    else -> "Hello GitHub, this is a funny text nobody needs! :D"
-                }
-            }
+    data class Room(val places: CharArray, val hallwayIndex: Int, val targetCh: Char) {
+        val finished get() = places.all { it == targetCh }
 
         fun copyWithChanged(i: Int, ch: Char) = copy(places = places.copyOf().also { it[i] = ch })
 
+        // do not inlcude cost on purpose in equals / hashCode
+        // this makes grouping common rooms and selecting the cheapest one easier
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
@@ -90,13 +83,7 @@ class Day23 : Day<Day23.Map>("23") {
                 }
                 // yielding all "walks from hallway into target room"
                 hallwayLoop@ for ((hallwayIndex, amphipodKind) in hallway.withIndex()) {
-                    val targetRoom = rooms[when (amphipodKind) {
-                        'A' -> 0
-                        'B' -> 1
-                        'C' -> 2
-                        'D' -> 3
-                        else -> continue@hallwayLoop
-                    }]
+                    val targetRoom = rooms.find { it.targetCh == amphipodKind } ?: continue@hallwayLoop
                     val roomReadyForMoveIn = targetRoom.places.all { it == '.' || it == amphipodKind }
                     if (roomReadyForMoveIn) {
                         val indexInRoom = targetRoom.places.indexOfLast { it == '.' }
@@ -106,16 +93,16 @@ class Day23 : Day<Day23.Map>("23") {
                         for (stepIndex in checkRange) {
                             if (hallway[stepIndex] != '.') continue@hallwayLoop
                         }
-
-                        val next = newMap(
-                            amphipodKind,
-                            targetRoom,
-                            indexInRoom,
-                            hallwayIndex,
-                            true,
-                            abs(targetIndex - hallwayIndex) + indexInRoom + 1
+                        yield(
+                            newMap(
+                                amphipodKind,
+                                targetRoom,
+                                indexInRoom,
+                                hallwayIndex,
+                                true,
+                                abs(targetIndex - hallwayIndex) + indexInRoom + 1
+                            )
                         )
-                        yield(next)
                     }
                 }
             }
@@ -123,9 +110,7 @@ class Day23 : Day<Day23.Map>("23") {
             return possibleMaps.toList()
         }
 
-
-        val finished
-            get() = rooms.all { it.finished }
+        val finished get() = rooms.all { it.finished }
 
         override fun toString() = buildString {
             hallway.forEach { append(it) }
@@ -162,18 +147,18 @@ class Day23 : Day<Day23.Map>("23") {
 
     override fun dataStar1(lines: List<String>) = Map(
         CharArray(11) { '.' },
-        Room(charArrayOf('C', 'B'), 2),
-        Room(charArrayOf('B', 'C'), 4),
-        Room(charArrayOf('D', 'A'), 6),
-        Room(charArrayOf('D', 'A'), 8)
+        Room(charArrayOf('C', 'B'), 2, 'A'),
+        Room(charArrayOf('B', 'C'), 4, 'B'),
+        Room(charArrayOf('D', 'A'), 6, 'C'),
+        Room(charArrayOf('D', 'A'), 8, 'D')
     )
 
     override fun dataStar2(lines: List<String>) = Map(
         CharArray(11) { '.' },
-        Room(charArrayOf('C', 'D', 'D', 'B'), 2),
-        Room(charArrayOf('B', 'C', 'B', 'C'), 4),
-        Room(charArrayOf('D', 'B', 'A', 'A'), 6),
-        Room(charArrayOf('D', 'A', 'C', 'A'), 8)
+        Room(charArrayOf('C', 'D', 'D', 'B'), 2, 'A'),
+        Room(charArrayOf('B', 'C', 'B', 'C'), 4, 'B'),
+        Room(charArrayOf('D', 'B', 'A', 'A'), 6, 'C'),
+        Room(charArrayOf('D', 'A', 'C', 'A'), 8, 'D')
     )
 
     fun firstFiveSolutions(data: Map): MutableList<Map> {
